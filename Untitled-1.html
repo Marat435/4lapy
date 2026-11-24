@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Четырелапы — Жануарларға арналған баспана | Семей қаласы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 0. КІРУ ЖӘНЕ ТІРКЕЛУ ЭКРАНЫ -->
+  <section class="auth-gate" id="authGate" aria-label="Сайтқа кіру және тіркелу">
+    <div class="auth-gate__card">
+      <div class="auth-gate__visual">
+        <div class="auth-gate__brand">
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <ellipse cx="11" cy="17" rx="4" ry="5.5" transform="rotate(-20 11 17)" fill="#f3b589"/>
+            <ellipse cx="19.5" cy="11.5" rx="4" ry="5.8" transform="rotate(-7 19.5 11.5)" fill="#f3b589"/>
+            <ellipse cx="28.5" cy="11.5" rx="4" ry="5.8" transform="rotate(7 28.5 11.5)" fill="#f3b589"/>
+            <ellipse cx="37" cy="17" rx="4" ry="5.5" transform="rotate(20 37 17)" fill="#f3b589"/>
+            <path d="M12.5 29.5C12.5 24 17.5 20.5 24 20.5C30.5 20.5 35.5 24 35.5 29.5C35.5 34.5 31.8 37.5 28.5 37.5C26.5 37.5 25.3 36.4 24 36.4C22.7 36.4 21.5 37.5 19.5 37.5C16.2 37.5 12.5 34.5 12.5 29.5Z" fill="#f3b589"/>
+          </svg>
+          <div>
+            <strong>Четырелапы</strong>
+            <span>Семей қаласы · Жұмыс кестесі: 24/7</span>
+          </div>
+        </div>
+
+        <div class="auth-gate__photo">
+          <img id="authBossImg" alt="Четырелапы баспанасының басшысы иті мен мысығымен">
+        </div>
+
+        <blockquote class="auth-gate__quote">
+          «Бір жануарды құтқару бүкіл әлемді өзгертпес, бірақ сол жануардың әлемі мәңгілікке өзгереді.»
+        </blockquote>
+      </div>
+
+      <div class="auth-gate__forms">
+        <h1>Четырелапы</h1>
+        <p class="auth-gate__lead">Сайтқа кіру үшін логин мен парольді енгізіңіз немесе тіркеліңіз.</p>
+
+        <div class="auth-role-tabs" role="tablist">
+          <button type="button" class="auth-role-tab is-active" data-auth-mode="login">Кіру</button>
+          <button type="button" class="auth-role-tab" data-auth-mode="register">Тіркелу</button>
+          <button type="button" class="auth-role-tab" data-auth-mode="dev">Әзірлеуші</button>
+        </div>
+
+        <!-- 1. Пайдаланушы кіруі -->
+        <form id="loginGateForm" class="gate-form">
+          <div class="form-group">
+            <label for="loginNameInput">Логин</label>
+            <input type="text" id="loginNameInput" placeholder="Логинді енгізіңіз" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassInput">Пароль</label>
+            <input type="password" id="loginPassInput" placeholder="Парольді енгізіңіз" required>
+          </div>
+          <button type="submit" class="btn btn--primary gate-submit">Кіру</button>
+          <button type="button" class="btn btn--outline gate-submit gate-guest" id="quickGuestBtn">Қонақ ретінде кіру</button>
+          <p class="form-error" id="loginGateError" role="alert"></p>
+        </form>
+
+        <!-- 2. Тіркелу -->
+        <form id="registerGateForm" class="gate-form" hidden>
+          <div class="form-group">
+            <label for="regNameInput">Логин / Аты-жөніңіз</label>
+            <input type="text" id="regNameInput" placeholder="Мысалы: aidana" required>
+          </div>
+          <div class="form-group">
+            <label for="regPhoneInput">WhatsApp / Байланыс</label>
+            <input type="text" id="regPhoneInput" placeholder="+7 (7XX) XXX-XX-XX" required>
+          </div>
+          <div class="form-group">
+            <label for="regPassInput">Пароль</label>
+            <input type="password" id="regPassInput" placeholder="Кемі 4 таңба" minlength="4" required>
+          </div>
+          <button type="submit" class="btn btn--accent gate-submit">Тіркелу</button>
+          <p class="form-error" id="registerGateError" role="alert"></p>
+        </form>
+
+        <!-- 3. Әзірлеуші кіруі (ашық подсказка жоқ) -->
+        <form id="devGateForm" class="gate-form" hidden>
+          <div class="form-group">
+            <label for="devGateLogin">Әзірлеуші логині</label>
+            <input type="text" id="devGateLogin" autocomplete="username" placeholder="Логинді енгізіңіз" required>
+          </div>
+          <div class="form-group">
+            <label for="devGatePass">Әзірлеуші паролі</label>
+            <div class="pass-wrap">
+              <input type="password" id="devGatePass" autocomplete="current-password" placeholder="Парольді енгізіңіз" required>
+              <button type="button" class="pass-toggle" id="toggleGatePass">Көрсету</button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn--accent gate-submit">Әзірлеуші режиміне кіру</button>
+          <p class="form-error" id="devGateError" role="alert"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- НЕГІЗГІ САЙТ -->
+  <div class="app-shell" id="appShell" hidden>
+    <header class="header">
+      <div class="container header__inner">
+        <a href="#home" class="logo" data-tab-link="home">
+          <span class="logo__icon" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+              <ellipse cx="11" cy="17" rx="4" ry="5.5" transform="rotate(-20 11 17)" fill="#3F5632"/>
+              <ellipse cx="19.5" cy="11.5" rx="4" ry="5.8" transform="rotate(-7 19.5 11.5)" fill="#3F5632"/>
+              <ellipse cx="28.5" cy="11.5" rx="4" ry="5.8" transform="rotate(7 28.5 11.5)" fill="#3F5632"/>
+              <ellipse cx="37" cy="17" rx="4" ry="5.5" transform="rotate(20 37 17)" fill="#3F5632"/>
+              <path d="M12.5 29.5C12.5 24 17.5 20.5 24 20.5C30.5 20.5 35.5 24 35.5 29.5C35.5 34.5 31.8 37.5 28.5 37.5C26.5 37.5 25.3 36.4 24 36.4C22.7 36.4 21.5 37.5 19.5 37.5C16.2 37.5 12.5 34.5 12.5 29.5Z" fill="#3F5632"/>
+            </svg>
+          </span>
+          <span class="logo__text">
+            <span class="logo__title">Четырелапы</span>
+            <span class="logo__subtitle">Семей қаласы · 24/7</span>
+          </span>
+        </a>
+
+        <button class="burger" id="burgerBtn" type="button" aria-label="Мәзірді ашу" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav" id="mainNav" aria-label="Бөлімдер">
+          <ul class="nav__list">
+            <li><button type="button" class="nav__tab is-active" data-tab="home">Басты бет</button></li>
+            <li><button type="button" class="nav__tab" data-tab="pets">Жануарлар</button></li>
+            <li><button type="button" class="nav__tab" data-tab="help">Көмектесу</button></li>
+            <li id="userReqNavItem"><button type="button" class="nav__tab" data-tab="request">Өтінім беру</button></li>
+            <li><button type="button" class="nav__tab" data-tab="analytics">Аналитика</button></li>
+            <li id="devNavItem" hidden><button type="button" class="nav__tab" data-tab="dev">Әзірлеуші</button></li>
+          </ul>
+        </nav>
+
+        <div class="header__user">
+          <span class="role-badge" id="currentRoleBadge">Қонақ</span>
+          <button type="button" class="btn btn--secondary btn--sm" id="logoutAppBtn">Шығу</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-views">
+      <!-- ВКЛАДКА 1: БАСТЫ БЕТ -->
+      <section class="tab-view is-active" id="view-home">
+        <div class="container">
+          <div class="hero__inner">
+            <div class="hero__content">
+              <div class="schedule-pill">
+                <span class="online-dot"></span>
+                Жұмыс кестесі: <strong>24/7</strong> · Семей қаласы
+              </div>
+
+              <h2>Оларға үй керек.<br>Ал сізге — адал дос.</h2>
+              <p class="hero__lead">
+                Семейдегі қараусыз қалған жануарларға тәулік бойы қамқорлық жасап, жаңа отбасы табуға көмектесеміз.
+              </p>
+
+              <blockquote class="proverb-card">
+                <p id="proverbText">«Адамгершіліктің өлшемі — әлсіз жаратылыс иелеріне жасаған қамқорлығың.»</p>
+                <footer id="proverbAuthor">— Жануарларға қамқорлық туралы нақыл сөз</footer>
+              </blockquote>
+
+              <div class="hero__actions">
+                <button type="button" class="btn btn--primary" data-tab-link="pets">Досыңды тап &rarr;</button>
+                <button type="button" class="btn btn--outline" data-tab-link="help">Көмектесу бөлімі</button>
+              </div>
+            </div>
+
+            <div class="hero__media">
+              <div class="hero__photo-frame">
+                <img id="heroBossImg" alt="Четырелапы баспанасының басшысы иті мен мысығымен">
+                <div class="hero__sticker">Семей · 24/7 Қамқорлық &#9825;</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="services__bar">
+            <article class="service-item">
+              <div class="service-item__icon">01</div>
+              <div class="service-item__text">
+                <h3>Қамқорлық 24/7</h3>
+                <p>Тәулік бойы ветеринарлық бақылау, екпе салу және күтім.</p>
+              </div>
+            </article>
+            <article class="service-item">
+              <div class="service-item__icon">02</div>
+              <div class="service-item__text">
+                <h3>Мед. карточка</h3>
+                <p>Әр жануардың салмағы, жасы, екпелері және тексерісі тіркелген.</p>
+              </div>
+            </article>
+            <article class="service-item">
+              <div class="service-item__icon">03</div>
+              <div class="service-item__text">
+                <h3>Жаңа отбасы</h3>
+                <p>Әр жануарға мейірімді әрі жауапты иелерін табуға көмектесу.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 2: ЖАНУАРЛАР -->
+      <section class="tab-view" id="view-pets">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Жаңа үйін күтіп жүргендер</h2>
+          </div>
+
+          <div class="pets__filters" role="group" aria-label="Санат сүзгісі">
+            <button type="button" class="filter-btn is-active" data-filter="all">Барлығы</button>
+            <button type="button" class="filter-btn" data-filter="Ит">Иттер</button>
+            <button type="button" class="filter-btn" data-filter="Мысық">Мысықтар</button>
+            <button type="button" class="filter-btn" data-filter="Басқа">Басқа жануарлар</button>
+          </div>
+
+          <div class="pets__grid" id="petsGrid"></div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 3: КӨМЕК БӨЛІМІ -->
+      <section class="tab-view" id="view-help">
+        <div class="container">
+          <div class="help__box">
+            <div class="help__header">
+              <span class="badge">Жеке көмек бөлімі · 24/7</span>
+              <h2>Бір жақсылық бір өмірді өзгерте алады</h2>
+              <p>Көмек көрсету үшін төмендегі батырмаларды басыңыз — бірден WhatsApp-қа немесе Kaspi-ге өтесіз.</p>
+            </div>
+
+            <div class="direct-links-bar">
+              <a href="https://wa.me/77751829492?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%20%D0%B1%D0%B5!%20%C2%AB%D0%A7%D0%B5%D1%82%D1%8B%D1%80%D0%B5%D0%BB%D0%B0%D0%BF%D1%8B%C2%BB%20%D0%BF%D0%B0%D0%BD%D0%B0%D1%81%D1%8B%D0%BD%D0%B0%20%D0%BA%D3%A9%D0%BC%D0%B5%D0%BA%D1%82%D0%B5%D1%81%D0%BA%D1%96%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96." target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                WhatsApp арқылы жазу &rarr;
+              </a>
+              <a href="https://kaspi.kz/pay" target="_blank" rel="noopener noreferrer" class="btn btn--accent">
+                Kaspi арқылы қолдау көрсету &rarr;
+              </a>
+            </div>
+
+            <div class="help__grid">
+              <article class="help-card">
+                <span class="help-card__num">01</span>
+                <h3>Жануарларды асырап алу</h3>
+                <p>Таңдаған жануарыңызбен танысу үшін WhatsApp-қа өтіп, кездесу уақытын белгілеңіз.</p>
+                <a href="https://wa.me/77751829492?text=%D0%96%D0%B0%D0%BD%D1%83%D0%B0%D1%80%20%D0%B0%D1%81%D1%8B%D1%80%D0%B0%D0%BF%20%D0%B0%D0%BB%D2%93%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96" target="_blank" rel="noopener noreferrer" class="help-card__link">WhatsApp-қа өту &rarr;</a>
+              </article>
+              <article class="help-card">
+                <span class="help-card__num">02</span>
+                <h3>Тамақ пен заттар әкелу</h3>
+                <p>Құрғақ азық, жармалар, жылы төсеніштер мен күтім заттарын 24/7 қабылдаймыз.</p>
+                <a href="https://wa.me/77751829492?text=%D0%A2%D0%B0%D0%BC%D0%B0%D2%9B%20%D0%BF%D0%B5%D0%BD%20%D0%B7%D0%B0%D1%82%D1%82%D0%B0%D1%80%20%D3%99%D0%BA%D0%B5%D0%BB%D0%B3%D1%96%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96" target="_blank" rel="noopener noreferrer" class="help-card__link">Жеткізуді келісу &rarr;</a>
+              </article>
+              <article class="help-card">
+                <span class="help-card__num">03</span>
+                <h3>Ерікті болу</h3>
+                <p>Серік болып серуендетуге, күтімге немесе ветеринарға апаруға көмектесіңіз.</p>
+                <a href="https://wa.me/77751829492?text=%D0%95%D1%80%D1%96%D0%BA%D1%82%D1%96%20%D0%B1%D0%BE%D0%BB%D2%93%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96" target="_blank" rel="noopener noreferrer" class="help-card__link">Ерікті ретінде жазылу &rarr;</a>
+              </article>
+              <article class="help-card">
+                <span class="help-card__num">04</span>
+                <h3>Қаржылай қолдау</h3>
+                <p>Емдеу, дәрі-дәрмек және азық қорына Kaspi арқылы үлес қосыңыз.</p>
+                <a href="https://kaspi.kz/pay" target="_blank" rel="noopener noreferrer" class="help-card__link">Kaspi-ге өту &rarr;</a>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 4: ПАЙДАЛАНУШЫ ӨТІНІМІ -->
+      <section class="tab-view" id="view-request">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Жаңа жануар тіркеуге өтінім беру</h2>
+          </div>
+
+          <div class="single-card-wrap" id="guestRegisterWall" hidden>
+            <div class="portal-card guest-wall-card">
+              <h3>Өтінім жіберу үшін тіркеліңіз</h3>
+              <p class="portal-card__sub">
+                Сіз қазір <strong>қонақ режимінде</strong> отырсыз. Өтінім жіберу үшін алдымен тіркелуден өтіңіз.
+              </p>
+              <button type="button" class="btn btn--accent portal-card__btn" id="openRegisterFromWallBtn">Тіркелу терезесіне өту</button>
+            </div>
+          </div>
+
+          <div class="single-card-wrap" id="requestFormWrap">
+            <form class="portal-card" id="petRequestForm">
+              <p class="portal-card__sub">Жануар туралы мәліметті толтырыңыз. Сипаттама жазуға төменгі оң жақтағы онлайн ИИ-ассистент көмектеседі.</p>
+
+              <div class="form-group">
+                <label for="petNameInput">Жануардың есімі</label>
+                <input type="text" id="petNameInput" placeholder="Мысалы: Ақтөс" required>
+              </div>
+
+              <div class="form-group">
+                <label for="petCategoryInput">Түрі</label>
+                <select id="petCategoryInput">
+                  <option value="Ит">Ит</option>
+                  <option value="Мысық">Мысық</option>
+                  <option value="Басқа">Басқа жануар</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="petPhotoFile">Суретті құрылғыдан таңдау</label>
+                <input type="file" id="petPhotoFile" accept="image/*">
+              </div>
+
+              <div class="form-group">
+                <label for="petPhotoUrl">Немесе сурет атауы (aktos.jpg, barsik.jpg, boris.jpg, miyau.jpg, ulpek.jpg)</label>
+                <input type="text" id="petPhotoUrl" placeholder="aktos.jpg">
+              </div>
+
+              <div class="form-group">
+                <label for="petDescInput">Сипаттамасы</label>
+                <textarea id="petDescInput" rows="3" placeholder="Жануардың мінезі мен ерекшелігі..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary portal-card__btn">Өтінім жіберу</button>
+              <p class="form-status" id="requestStatus" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 5: АНАЛИТИКА -->
+      <section class="tab-view" id="view-analytics">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Сайт аналитикасы</h2>
+          </div>
+
+          <div class="analytics__box">
+            <div class="analytics__top">
+              <div>
+                <span class="badge">Нақты сайт деректері · 2026</span>
+                <h3>«Четырелапы» сайтының тірі көрсеткіштері</h3>
+                <p class="analytics__updated">Жұмыс режимі: 24/7 · Деректер жануарлар мен өтінімдерге қарай автоматты өзгереді</p>
+              </div>
+              <button type="button" class="btn btn--outline btn--sm" id="downloadCsvBtn">CSV жүктеу</button>
+            </div>
+
+            <div class="kpi-grid">
+              <article class="kpi-card">
+                <span>Сайттағы жануарлар</span>
+                <strong id="kpiActivePets">0</strong>
+              </article>
+              <article class="kpi-card">
+                <span>Күтудегі өтінімдер</span>
+                <strong id="kpiPendingReqs">0</strong>
+              </article>
+              <article class="kpi-card">
+                <span>Тіркелген қолданушылар</span>
+                <strong id="kpiRegisteredUsers">0</strong>
+              </article>
+              <article class="kpi-card">
+                <span>Орташа салмақ</span>
+                <strong id="kpiAvgWeight">0 кг</strong>
+              </article>
+            </div>
+
+            <div class="analytics__content">
+              <div class="chart-card">
+                <h4>Сайттағы санаттар үлесі</h4>
+                <div class="bar-row">
+                  <span id="labelDogs">Иттер: 0%</span>
+                  <div class="bar-track"><div class="bar-fill" id="barDogs" style="width: 0%;"></div></div>
+                </div>
+                <div class="bar-row">
+                  <span id="labelCats">Мысықтар: 0%</span>
+                  <div class="bar-track"><div class="bar-fill bar-fill--orange" id="barCats" style="width: 0%;"></div></div>
+                </div>
+                <div class="bar-row">
+                  <span id="labelOthers">Басқа жануарлар: 0%</span>
+                  <div class="bar-track"><div class="bar-fill bar-fill--soft" id="barOthers" style="width: 0%;"></div></div>
+                </div>
+              </div>
+
+              <div class="insights-card">
+                <h4>Сайт жағдайының қорытындысы</h4>
+                <ul id="analyticsDynamicInsights"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ВКЛАДКА 6: ӘЗІРЛЕУШІ ПАНЕЛІ (Өтінім жіберу жоқ — тек қабылдау, жануар қосу/өңдеу, нақыл сөз) -->
+      <section class="tab-view" id="view-dev">
+        <div class="container">
+          <div class="section-heading">
+            <h2>Әзірлеуші басқару панелі</h2>
+          </div>
+
+          <div id="devFullControl">
+            <div class="dev-grid">
+              <!-- 1. Жаңа жануар қосу -->
+              <form class="dev-box" id="devAddPetForm">
+                <h3>1. Жаңа жануар қосу</h3>
+                <p class="dev-box__sub">Жануарды, салмағын және мед. карточкасын сайтқа қосыңыз.</p>
+
+                <div class="form-group">
+                  <label for="newPetName">Есімі</label>
+                  <input type="text" id="newPetName" placeholder="Мысалы: Ақтөс" required>
+                </div>
+
+                <div class="dev-pet-row__grid">
+                  <div class="form-group">
+                    <label for="newPetCat">Санаты</label>
+                    <select id="newPetCat">
+                      <option value="Ит">Ит</option>
+                      <option value="Мысық">Мысық</option>
+                      <option value="Басқа">Басқа</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="newPetAge">Жасы</label>
+                    <input type="text" id="newPetAge" placeholder="1 жас">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPetWeight">Салмағы (кг)</label>
+                    <input type="text" id="newPetWeight" placeholder="12 кг">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="newPetPhotoFile">Суретті файлдан жүктеу</label>
+                  <input type="file" id="newPetPhotoFile" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                  <label for="newPetPhotoName">Немесе сурет атауы</label>
+                  <input type="text" id="newPetPhotoName" placeholder="aktos.jpg">
+                </div>
+
+                <div class="form-group">
+                  <label for="newPetVaccines">Екпелері</label>
+                  <input type="text" id="newPetVaccines" placeholder="Құтыруға қарсы екпе салынған">
+                </div>
+
+                <div class="form-group">
+                  <label for="newPetVetNotes">Ветеринар қорытындысы</label>
+                  <input type="text" id="newPetVetNotes" placeholder="Дені сау">
+                </div>
+
+                <div class="form-group">
+                  <label for="newPetDesc">Сипаттамасы</label>
+                  <textarea id="newPetDesc" rows="2" placeholder="Жануар туралы мәлімет..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn--primary">Жануарды сайтқа қосу</button>
+                <p class="form-status" id="devAddStatus"></p>
+              </form>
+
+              <!-- 2. Пайдаланушылардан келген өтінімдерді қабылдау + Нақыл сөз -->
+              <div class="dev-col-stack">
+                <div class="dev-box">
+                  <h3>2. Келіп түскен өтінімдерді қабылдау</h3>
+                  <p class="dev-box__sub">Пайдаланушылар жіберген өтінімдерді тексеріп, қабылдаңыз немесе өшіріңіз.</p>
+                  <div class="requests-list" id="requestsList"></div>
+                </div>
+
+                <form class="dev-box" id="devSettingsForm">
+                  <h3>3. Басты беттегі нақыл сөз</h3>
+                  <div class="form-group">
+                    <label for="editProverbInput">Нақыл сөз</label>
+                    <textarea id="editProverbInput" rows="2" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="editProverbAuthorInput">Түсіндірме</label>
+                    <input type="text" id="editProverbAuthorInput" required>
+                  </div>
+                  <button type="submit" class="btn btn--secondary btn--sm">Нақыл сөзді сақтау</button>
+                  <p class="form-status" id="devSettingsStatus"></p>
+                </form>
+              </div>
+            </div>
+
+            <!-- 4. Жануарларды, салмағын және мед. карточкасын өзгерту -->
+            <div class="dev-box">
+              <h3>4. Жануарларды, салмағын және мед. карточкасын өзгерту</h3>
+              <div class="dev-pets-list" id="devPetsManager"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <strong>«Четырелапы» жануарлар панасы</strong>
+          <p>Семей қаласы · Жұмыс кестесі: 24/7</p>
+        </div>
+        <div class="footer__links">
+          <button type="button" class="footer-link-btn" data-tab-link="home">Басты бет</button>
+          <button type="button" class="footer-link-btn" data-tab-link="pets">Жануарлар</button>
+          <button type="button" class="footer-link-btn" data-tab-link="help">Көмектесу</button>
+          <button type="button" class="footer-link-btn" data-tab-link="analytics">Аналитика</button>
+        </div>
+        <p class="footer__copy">&copy; 2026 «Четырелапы». Барлық құқықтар қорғалған.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ЖАНУАРДЫ БАСҚАНДА ШЫҒАТЫН МОДАЛЬ -->
+  <div class="modal" id="petModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal__content">
+      <button type="button" class="modal__close" id="modalClose" aria-label="Жабу">&times;</button>
+
+      <div class="modal__top-grid">
+        <div>
+          <span class="badge" id="modalBadge">Отбасын іздейді</span>
+          <img id="modalImg" src="" alt="" class="modal__img">
+
+          <div class="modal__photo-edit">
+            <label for="modalPhotoFile" class="btn btn--secondary btn--sm">Суретті құрылғыдан өзгерту</label>
+            <input type="file" id="modalPhotoFile" accept="image/*" hidden>
+            <input type="text" id="modalPhotoInput" placeholder="Немесе сурет аты: aktos.jpg">
+          </div>
+        </div>
+
+        <div>
+          <h3 id="modalTitle">Жануар есімі</h3>
+          <p class="modal__meta" id="modalMeta"></p>
+          <p class="modal__desc" id="modalDesc"></p>
+
+          <div class="med-card">
+            <h4>Медициналық карточка</h4>
+            <dl class="med-card__list">
+              <div><dt>Жасы:</dt><dd id="medAge"></dd></div>
+              <div><dt>Салмағы:</dt><dd id="medWeight"></dd></div>
+              <div><dt>Екпелері:</dt><dd id="medVaccines"></dd></div>
+              <div><dt>Стерилизация / Чип:</dt><dd id="medSterilized"></dd></div>
+              <div><dt>Соңғы тексеріс:</dt><dd id="medLastCheck"></dd></div>
+              <div><dt>Ветеринар қорытындысы:</dt><dd id="medVetNotes"></dd></div>
+            </dl>
+          </div>
+
+          <div class="modal__actions">
+            <button type="button" class="btn btn--primary btn--sm" id="saveModalChangesBtn">Суретті сақтау</button>
+            <a href="https://wa.me/77751829492?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%20%D0%B1%D0%B5!%20%D0%96%D0%B0%D0%BD%D1%83%D0%B0%D1%80%20%D0%B1%D0%BE%D0%B9%D1%8B%D0%BD%D1%88%D%B0%20%D1%85%D0%B0%D0%B1%D0%B0%D1%80%D0%BB%D0%B0%D1%81%D1%8B%D0%BF%20%D1%82%D2%B1%D1%80%D0%BC%D1%8B%D0%BD." target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm">WhatsApp арқылы жазу</a>
+          </div>
+          <p class="form-status" id="modalSaveStatus"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ОНЛАЙН ИИ-АССИСТЕНТ -->
+  <div class="floating-ai" id="floatingAi">
+    <div class="floating-ai__popover" id="floatingAiPopover" hidden>
+      <div class="floating-ai__head">
+        <div class="floating-ai__title">
+          <span class="online-dot"></span>
+          <span>ИИ-ассистент · Онлайн</span>
+        </div>
+        <button type="button" class="floating-ai__close" id="floatingAiClose" aria-label="Жабу">&times;</button>
+      </div>
+      <div class="floating-ai__messages" id="floatingAiMessages">
+        <div class="ai-msg ai-msg--bot">
+          Сәлем! Мен «Четырелапы» панаханасының онлайн ИИ-ассистентімін. Панахана сұрақтарына жауап беремін, мысық/ит таңдауға және сипаттама жазуға көмектесемін.
+        </div>
+      </div>
+      <form class="floating-ai__form" id="floatingAiForm">
+        <input type="text" id="floatingAiInput" placeholder="Сұрақ жазыңыз немесе жануар атын..." required>
+        <button type="submit" class="btn btn--primary btn--sm">&rarr;</button>
+      </form>
+    </div>
+
+    <button type="button" class="floating-ai__fab" id="floatingAiFab" aria-label="Онлайн ИИ-ассистентті ашу" aria-expanded="false">
+      <span class="fab-dot"></span>
+      AI
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
